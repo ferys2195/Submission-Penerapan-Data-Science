@@ -3,7 +3,7 @@ name: Deploy Streamlit App
 on:
   push:
     branches:
-      - main # Ubah sesuai dengan cabang yang Anda gunakan
+      - main
 
 jobs:
   deploy:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.11" # Versi Python yang Anda gunakan
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
@@ -25,4 +25,4 @@ jobs:
 
       - name: Deploy to Streamlit
         run: |
-          streamlit run app.py  # Ubah dengan path ke file Streamlit Anda
+          streamlit run submission_2/app.py
