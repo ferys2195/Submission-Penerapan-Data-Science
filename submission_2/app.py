@@ -15,7 +15,12 @@ def predict_dropout(data, model_and_scaler):
 st.title("Student Dropout Prediction")
 
 # Load model dan scaler yang sudah disimpan
-model_and_scaler = joblib.load('../submission_2/model.joblib')
+try:
+    model_and_scaler = joblib.load('model.joblib')
+    st.write("Model loaded successfully!")
+except FileNotFoundError:
+    model_and_scaler = joblib.load('submission_2/model.joblib')
+    st.write("Model loaded successfully!")
 
 # Fungsi untuk membuat selectbox dengan tampilan Ya/Tidak tetapi mengembalikan nilai 0/1
 def selectbox_ya_tidak(label):
