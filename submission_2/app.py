@@ -17,14 +17,12 @@ st.title("Student Dropout Prediction")
 # Load model dan scaler yang sudah disimpan
 try:
     model_and_scaler = joblib.load('model.joblib')
-    st.write("Model loaded successfully!")
 except FileNotFoundError:
     model_and_scaler = joblib.load('submission_2/model.joblib')
-    st.write("Model loaded successfully!")
 
 # Fungsi untuk membuat selectbox dengan tampilan Ya/Tidak tetapi mengembalikan nilai 0/1
 def selectbox_ya_tidak(label):
-    mapping = {"Tidak": 0, "Ya": 1}
+    mapping = {"No": 0, "Yes": 1}
     selected = st.selectbox(label, list(mapping.keys()))
     return mapping[selected]
 
@@ -57,18 +55,17 @@ def selectbox_application_method(label):
     selected = st.selectbox(label, list(mapping.keys()))
     return mapping[selected]
 
-# Input lainnya
-curricular_units_1st_sem_grade = st.number_input("Nilai Mata Kuliah Semester 1", min_value=0.0, max_value=26.0, value=5.0)
-curricular_units_1st_sem_approve = st.number_input("Nilai Lulus Mata Kuliah Semester 1", min_value=0.0, max_value=20.0, value=10.0)
-curricular_units_2nd_sem_grade = st.number_input("Nilai Mata Kuliah Semester 2", min_value=0.0, max_value=20.0, value=10.0)
-curricular_units_2nd_sem_approve = st.number_input("Nilai Lulus Mata Kuliah Semester 2", min_value=0.0, max_value=20.0, value=10.0)
-# Menggunakan fungsi untuk selectbox dengan tampilan Ya/Tidak
-tuition_fees_up_to_date = selectbox_ya_tidak("Biaya Kuliah Terbayar")
-scholarship_holder = selectbox_ya_tidak("Penerima Beasiswa")
-application_mode = selectbox_application_method("Metode Pendaftaran yang digunakan")
-gender = selectbox_male_female("Jenis Kelamin")
-age_at_enrollment = st.number_input("Usia Saat Pendaftaran", min_value=17, max_value=100, value=20)
-debtor = selectbox_ya_tidak("Status Debitur")
+curricular_units_1st_sem_grade = st.number_input("Curricular Unit 1st Grade", min_value=0.0, max_value=26.0, value=5.0)
+curricular_units_1st_sem_approve = st.number_input("Curricular Unit 1st Approved", min_value=0.0, max_value=20.0, value=10.0)
+curricular_units_2nd_sem_grade = st.number_input("Curricular Unit 2nd Grade", min_value=0.0, max_value=20.0, value=10.0)
+curricular_units_2nd_sem_approve = st.number_input("Curricular Unit 2nd Approved", min_value=0.0, max_value=20.0, value=10.0)
+
+tuition_fees_up_to_date = selectbox_ya_tidak("Tuition fees up to date ?")
+scholarship_holder = selectbox_ya_tidak("Scholarship Holder ?")
+application_mode = selectbox_application_method("Application Mode")
+gender = selectbox_male_female("Gender")
+age_at_enrollment = st.number_input("Age at Enrollment", min_value=17, max_value=100, value=20)
+debtor = selectbox_ya_tidak("Debtor ?")
 
 
 features = [
@@ -99,11 +96,6 @@ user_data = pd.DataFrame([[application_mode,
                           ]],
                          columns=features)
 
-
-
-# Tampilkan data input pengguna
-st.write("### Data Input Pengguna")
-st.write(user_data)
 
 # Prediksi dan tampilkan hasil
 if st.button("Predict Dropout"):
